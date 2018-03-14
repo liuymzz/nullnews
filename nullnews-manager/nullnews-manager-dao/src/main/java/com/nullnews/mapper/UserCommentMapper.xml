@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nullnews.mapper.UserCommentMapper">
+	<resultMap id="BaseResultMap" type="com.nullnews.pojo.UserComment">
+		<id column="comment_id" jdbcType="VARCHAR" property="commentId" />
+		<result column="user_id" jdbcType="VARCHAR" property="userId" />
+		<result column="passage_id" jdbcType="VARCHAR" property="passageId" />
+		<result column="comment_time" jdbcType="TIMESTAMP" property="commentTime" />
+		<result column="comment_parent_id" jdbcType="VARCHAR" property="commentParentId" />
+		<result column="comment_like" jdbcType="INTEGER" property="commentLike" />
+		<result column="comment_dislike" jdbcType="INTEGER" property="commentDislike" />
+		<result column="comment_content" jdbcType="VARCHAR" property="commentContent" />
+		<result column="comment_state" jdbcType="INTEGER" property="commentState" />
+	</resultMap>
+	<resultMap type="com.nullnews.pojo.UserInfoAndUserComment"
+		id="CommentByPassageLimitMap">
+		<result column="comment_id" jdbcType="VARCHAR" property="userComment.commentId" />
+		<result column="user_id" jdbcType="VARCHAR" property="userComment.userId" />
+		<result column="passage_id" jdbcType="VARCHAR" property="userComment.passageId" />
+		<result column="comment_time" jdbcType="TIMESTAMP"
+			property="userComment.commentTime" />
+		<result column="comment_parent_id" jdbcType="VARCHAR"
+			property="userComment.commentParentId" />
+		<result column="comment_like" jdbcType="INTEGER"
+			property="userComment.commentLike" />
+		<result column="comment_dislike" jdbcType="INTEGER"
+			property="userComment.commentDislike" />
+		<result column="comment_content" jdbcType="VARCHAR"
+			property="userComment.commentContent" />
+		<result column="comment_state" jdbcType="INTEGER"
+			property="userComment.commentState" />
+
+		<result column="user_id" jdbcType="VARCHAR" property="userInfo.userId" />
+		<result column="user_name" jdbcType="VARCHAR" property="userInfo.userName" />
+		<result column="user_password" jdbcType="VARCHAR" property="userInfo.userPassword" />
+		<result column="user_phone" jdbcType="VARCHAR" property="userInfo.userPhone" />
+		<result column="user_secure_code" jdbcType="VARCHAR"
+			property="userInfo.userSecureCode" />
+		<result column="user_state" jdbcType="INTEGER" property="userInfo.userState" />
+		<result column="user_type" jdbcType="INTEGER" property="userInfo.userType" />
+		<result column="user_uri" jdbcType="VARCHAR" property="userInfo.userUri" />
+		<result column="user_addtime" jdbcType="TIMESTAMP" property="userInfo.userAddtime" />
+		<result column="user_sex" jdbcType="INTEGER" property="userInfo.userSex" />
+		<result column="user_brief" jdbcType="VARCHAR" property="userInfo.userBrief" />
+		<result column="user_passage_num" jdbcType="INTEGER"
+			property="userInfo.userPassageNum" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		comment_id, user_id, passage_id, comment_time,
+		comment_parent_id, comment_like,
+		comment_dislike,
+		comment_content,
+		comment_state
+	</sql>
+	<select id="selectByExample" parameterType="com.nullnews.pojo.UserCommentExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from user_comment
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user_comment
+		where comment_id = #{commentId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		user_comment
+		where comment_id = #{commentId,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.nullnews.pojo.UserCommentExample">
+		delete from user_comment
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.nullnews.pojo.UserComment">
+		insert into user_comment
+		(comment_id, user_id, passage_id,
+		comment_time, comment_parent_id,
+		comment_like,
+		comment_dislike, comment_content, comment_state
+		)
+		values
+		(#{commentId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+		#{passageId,jdbcType=VARCHAR},
+		#{commentTime,jdbcType=TIMESTAMP},
+		#{commentParentId,jdbcType=VARCHAR}, #{commentLike,jdbcType=INTEGER},
+		#{commentDislike,jdbcType=INTEGER},
+		#{commentContent,jdbcType=VARCHAR}, #{commentState,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.nullnews.pojo.UserComment">
+		insert into user_comment
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="commentId != null">
+				comment_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="passageId != null">
+				passage_id,
+			</if>
+			<if test="commentTime != null">
+				comment_time,
+			</if>
+			<if test="commentParentId != null">
+				comment_parent_id,
+			</if>
+			<if test="commentLike != null">
+				comment_like,
+			</if>
+			<if test="commentDislike != null">
+				comment_dislike,
+			</if>
+			<if test="commentContent != null">
+				comment_content,
+			</if>
+			<if test="commentState != null">
+				comment_state,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="commentId != null">
+				#{commentId,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="passageId != null">
+				#{passageId,jdbcType=VARCHAR},
+			</if>
+			<if test="commentTime != null">
+				#{commentTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="commentParentId != null">
+				#{commentParentId,jdbcType=VARCHAR},
+			</if>
+			<if test="commentLike != null">
+				#{commentLike,jdbcType=INTEGER},
+			</if>
+			<if test="commentDislike != null">
+				#{commentDislike,jdbcType=INTEGER},
+			</if>
+			<if test="commentContent != null">
+				#{commentContent,jdbcType=VARCHAR},
+			</if>
+			<if test="commentState != null">
+				#{commentState,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.nullnews.pojo.UserCommentExample"
+		resultType="java.lang.Long">
+		select count(*) from user_comment
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update user_comment
+		<set>
+			<if test="record.commentId != null">
+				comment_id = #{record.commentId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userId != null">
+				user_id = #{record.userId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.passageId != null">
+				passage_id = #{record.passageId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.commentTime != null">
+				comment_time = #{record.commentTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.commentParentId != null">
+				comment_parent_id =
+				#{record.commentParentId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.commentLike != null">
+				comment_like = #{record.commentLike,jdbcType=INTEGER},
+			</if>
+			<if test="record.commentDislike != null">
+				comment_dislike =
+				#{record.commentDislike,jdbcType=INTEGER},
+			</if>
+			<if test="record.commentContent != null">
+				comment_content =
+				#{record.commentContent,jdbcType=VARCHAR},
+			</if>
+			<if test="record.commentState != null">
+				comment_state = #{record.commentState,jdbcType=INTEGER},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update user_comment
+		set comment_id =
+		#{record.commentId,jdbcType=VARCHAR},
+		user_id =
+		#{record.userId,jdbcType=VARCHAR},
+		passage_id =
+		#{record.passageId,jdbcType=VARCHAR},
+		comment_time =
+		#{record.commentTime,jdbcType=TIMESTAMP},
+		comment_parent_id =
+		#{record.commentParentId,jdbcType=VARCHAR},
+		comment_like =
+		#{record.commentLike,jdbcType=INTEGER},
+		comment_dislike =
+		#{record.commentDislike,jdbcType=INTEGER},
+		comment_content =
+		#{record.commentContent,jdbcType=VARCHAR},
+		comment_state =
+		#{record.commentState,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.nullnews.pojo.UserComment">
+		update user_comment
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="passageId != null">
+				passage_id = #{passageId,jdbcType=VARCHAR},
+			</if>
+			<if test="commentTime != null">
+				comment_time = #{commentTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="commentParentId != null">
+				comment_parent_id = #{commentParentId,jdbcType=VARCHAR},
+			</if>
+			<if test="commentLike != null">
+				comment_like = #{commentLike,jdbcType=INTEGER},
+			</if>
+			<if test="commentDislike != null">
+				comment_dislike = #{commentDislike,jdbcType=INTEGER},
+			</if>
+			<if test="commentContent != null">
+				comment_content = #{commentContent,jdbcType=VARCHAR},
+			</if>
+			<if test="commentState != null">
+				comment_state = #{commentState,jdbcType=INTEGER},
+			</if>
+		</set>
+		where comment_id = #{commentId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.nullnews.pojo.UserComment">
+		update
+		user_comment
+		set user_id = #{userId,jdbcType=VARCHAR},
+		passage_id =
+		#{passageId,jdbcType=VARCHAR},
+		comment_time =
+		#{commentTime,jdbcType=TIMESTAMP},
+		comment_parent_id =
+		#{commentParentId,jdbcType=VARCHAR},
+		comment_like =
+		#{commentLike,jdbcType=INTEGER},
+		comment_dislike =
+		#{commentDislike,jdbcType=INTEGER},
+		comment_content =
+		#{commentContent,jdbcType=VARCHAR},
+		comment_state =
+		#{commentState,jdbcType=INTEGER}
+		where comment_id =
+		#{commentId,jdbcType=VARCHAR}
+	</update>
+	<select id="getCommentByPassageLimit" resultMap="CommentByPassageLimitMap">
+		SELECT
+		`user`.user_id,
+		`user`.user_name,
+		`user`.user_uri,
+		`comment`.comment_id,
+		`comment`.user_id,
+		`comment`.passage_id,
+		`comment`.comment_time,
+		`comment`.comment_parent_id,
+		`comment`.comment_like,
+		`comment`.comment_dislike,
+		`comment`.comment_content
+		FROM
+		user_info AS
+		`user`
+		INNER JOIN user_comment AS `comment` ON `comment`.user_id =
+		`user`.user_id
+		WHERE `comment`.passage_id=#{passageId}
+		ORDER BY
+		`comment`.comment_time DESC
+	</select>
+
+</mapper>

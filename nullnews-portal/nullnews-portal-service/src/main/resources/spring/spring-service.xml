@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+	">
+
+	<context:component-scan base-package="com.nullnews.portal.service" />
+
+	<!-- 使用dubbo发布服务 -->
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="nullnews-portal" />
+	<dubbo:registry protocol="zookeeper" address="39.108.160.101:2181" />
+	<!-- 用dubbo协议在20880端口暴露服务 -->
+	<dubbo:protocol name="dubbo" port="20880" />
+	<!-- 声明需要暴露的服务接口 -->
+	<dubbo:service interface="com.nullnews.portal.service.PublishService"
+		ref="publishServiceImpl" timeout="600000" />
+	<dubbo:service interface="com.nullnews.portal.service.NewsService"
+		ref="newsServiceImpl" timeout="600000"></dubbo:service>
+	<dubbo:service interface="com.nullnews.portal.service.CommentService"
+		ref="commentServiceImpl" timeout="600000"></dubbo:service>
+	<dubbo:service interface="com.nullnews.portal.service.IndexService"
+		ref="indexServiceImpl" timeout="600000"></dubbo:service>
+	<dubbo:service interface="com.nullnews.portal.service.UserService"
+		ref="userServiceImpl" timeout="600000"></dubbo:service>
+	<dubbo:service interface="com.nullnews.portal.service.PersonalCenterService"
+		ref="personalCenterServiceImpl" timeout="600000"></dubbo:service>
+	<dubbo:service interface="com.nullnews.portal.service.QuanziService"
+		ref="quanziServiceImpl" timeout="600000"></dubbo:service>
+	<dubbo:service interface="com.nullnews.portal.service.ZhuanlanService"
+		ref="zhuanlanServiceImpl" timeout="600000"></dubbo:service>
+	<dubbo:service interface="com.nullnews.portal.service.UserFollowService"
+		ref="userFollowServiceImpl" timeout="600000"></dubbo:service>
+
+</beans>

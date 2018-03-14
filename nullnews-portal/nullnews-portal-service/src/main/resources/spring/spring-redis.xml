@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean name="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+	</bean>
+
+	<bean name="jedisPool" class="redis.clients.jedis.JedisPool">
+		<constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
+		<constructor-arg name="host" value="39.108.160.101" />
+		<constructor-arg name="port" value="6379" />
+		<constructor-arg name="timeout" value="300"/>
+		<constructor-arg name="password" value="Lym1424659514" />
+		<constructor-arg name="database" value="0" />
+	</bean>
+
+</beans>

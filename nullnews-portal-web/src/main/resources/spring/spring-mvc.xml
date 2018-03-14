@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+	<context:property-placeholder location="classpath:properties/*" />
+	<context:component-scan base-package="com.nullnews.portal.controller" />
+	<mvc:default-servlet-handler />
+	<mvc:annotation-driven />
+
+	<!-- 引用dubbo服务 -->
+	<dubbo:application name="nullnews-portal-web" />
+	<dubbo:registry protocol="zookeeper" address="39.108.160.101:2181" />
+	<dubbo:reference interface="com.nullnews.portal.service.PublishService"
+		id="publishService" timeout="600000" />
+	<dubbo:reference interface="com.nullnews.portal.service.NewsService"
+		id="newsService" timeout="600000"></dubbo:reference>
+	<dubbo:reference interface="com.nullnews.portal.service.UserService"
+		id="userService" timeout="600000"></dubbo:reference>
+	<dubbo:reference interface="com.nullnews.portal.service.IndexService"
+		id="indexService" timeout="600000"></dubbo:reference>
+	<dubbo:reference interface="com.nullnews.portal.service.CommentService"
+		id="commentService" timeout="600000"></dubbo:reference>
+	<dubbo:reference interface="com.nullnews.portal.service.PersonalCenterService"
+		id="personalCenterService" timeout="600000"></dubbo:reference>
+	<dubbo:reference interface="com.nullnews.portal.service.QuanziService"
+		id="quanziService" timeout="600000"></dubbo:reference>
+	<dubbo:reference interface="com.nullnews.portal.service.ZhuanlanService"
+		id="zhuanlanService" timeout="600000"></dubbo:reference>
+		<dubbo:reference interface="com.nullnews.portal.service.UserFollowService"
+		id="userFollowService" timeout="600000"></dubbo:reference>
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="suffix" value=".jsp" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+	</bean>
+
+	<bean name="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+</beans>

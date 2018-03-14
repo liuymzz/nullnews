@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nullnews.mapper.Ad1Mapper">
+  <resultMap id="BaseResultMap" type="com.nullnews.pojo.Ad1">
+    <id column="ad_id" jdbcType="VARCHAR" property="adId" />
+    <result column="ad_title" jdbcType="VARCHAR" property="adTitle" />
+    <result column="ad_url" jdbcType="VARCHAR" property="adUrl" />
+    <result column="ad_picture" jdbcType="VARCHAR" property="adPicture" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ad_id, ad_title, ad_url, ad_picture
+  </sql>
+  <select id="selectByExample" parameterType="com.nullnews.pojo.Ad1Example" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ad1
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ad1
+    where ad_id = #{adId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ad1
+    where ad_id = #{adId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nullnews.pojo.Ad1Example">
+    delete from ad1
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nullnews.pojo.Ad1">
+    insert into ad1 (ad_id, ad_title, ad_url, 
+      ad_picture)
+    values (#{adId,jdbcType=VARCHAR}, #{adTitle,jdbcType=VARCHAR}, #{adUrl,jdbcType=VARCHAR}, 
+      #{adPicture,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nullnews.pojo.Ad1">
+    insert into ad1
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adId != null">
+        ad_id,
+      </if>
+      <if test="adTitle != null">
+        ad_title,
+      </if>
+      <if test="adUrl != null">
+        ad_url,
+      </if>
+      <if test="adPicture != null">
+        ad_picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adId != null">
+        #{adId,jdbcType=VARCHAR},
+      </if>
+      <if test="adTitle != null">
+        #{adTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="adUrl != null">
+        #{adUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="adPicture != null">
+        #{adPicture,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nullnews.pojo.Ad1Example" resultType="java.lang.Long">
+    select count(*) from ad1
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ad1
+    <set>
+      <if test="record.adId != null">
+        ad_id = #{record.adId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adTitle != null">
+        ad_title = #{record.adTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adUrl != null">
+        ad_url = #{record.adUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adPicture != null">
+        ad_picture = #{record.adPicture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ad1
+    set ad_id = #{record.adId,jdbcType=VARCHAR},
+      ad_title = #{record.adTitle,jdbcType=VARCHAR},
+      ad_url = #{record.adUrl,jdbcType=VARCHAR},
+      ad_picture = #{record.adPicture,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nullnews.pojo.Ad1">
+    update ad1
+    <set>
+      <if test="adTitle != null">
+        ad_title = #{adTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="adUrl != null">
+        ad_url = #{adUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="adPicture != null">
+        ad_picture = #{adPicture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ad_id = #{adId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nullnews.pojo.Ad1">
+    update ad1
+    set ad_title = #{adTitle,jdbcType=VARCHAR},
+      ad_url = #{adUrl,jdbcType=VARCHAR},
+      ad_picture = #{adPicture,jdbcType=VARCHAR}
+    where ad_id = #{adId,jdbcType=VARCHAR}
+  </update>
+</mapper>

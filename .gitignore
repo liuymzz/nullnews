@@ -1,0 +1,31 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+.idea/
+nullnews-manager-web/src/main/main.iml
+nullnews-manager/nullnews-manager-dao/src/main/main7.iml
+nullnews-manager/nullnews-manager-interface/src/main/main4.iml
+nullnews-manager/nullnews-manager-pojo/src/main/main5.iml
+nullnews-manager/nullnews-manager-service/src/main/main2.iml
+nullnews-portal-web/src/main/main3.iml
+nullnews-portal/nullnews-portal-interface/src/main/main6.iml
+nullnews-portal/nullnews-portal-service/src/main/main1.iml

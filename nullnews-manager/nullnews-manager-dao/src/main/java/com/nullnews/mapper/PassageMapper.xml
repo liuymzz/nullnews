@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nullnews.mapper.PassageMapper">
+	<resultMap id="BaseResultMap" type="com.nullnews.pojo.Passage">
+		<id column="passage_id" jdbcType="VARCHAR" property="passageId" />
+		<result column="user_id" jdbcType="VARCHAR" property="userId" />
+		<result column="passage_title" jdbcType="VARCHAR" property="passageTitle" />
+		<result column="passage_picture" jdbcType="VARCHAR" property="passagePicture" />
+		<result column="passage_time" jdbcType="TIMESTAMP" property="passageTime" />
+		<result column="passage_like_count" jdbcType="INTEGER"
+			property="passageLikeCount" />
+		<result column="passage_look_count" jdbcType="INTEGER"
+			property="passageLookCount" />
+		<result column="passage_state" jdbcType="INTEGER" property="passageState" />
+
+	</resultMap>
+		<resultMap  type="com.nullnews.pojo.UserInfoAndPassage" id=BaseResultUserMap>
+		<id column="user_id" jdbcType="VARCHAR" property="userInfo.userId" />
+		<result column="user_name" jdbcType="VARCHAR" property="userInfo.userName" />
+		<result column="user_password" jdbcType="VARCHAR" property="userInfo.userPassword" />
+		<result column="user_phone" jdbcType="VARCHAR" property="userInfo.userPhone" />
+		<result column="user_secure_code" jdbcType="VARCHAR" property="userInfo.userSecureCode" />
+		<result column="user_state" jdbcType="INTEGER" property="userInfo.userState" />
+		<result column="user_type" jdbcType="INTEGER" property="userInfo.userType" />
+		<result column="user_uri" jdbcType="VARCHAR" property="userInfo.userUri" />
+		<result column="user_addtime" jdbcType="TIMESTAMP" property="userInfo.userAddtime" />
+		<result column="user_sex" jdbcType="INTEGER" property="userInfo.userSex" />
+		<result column="user_brief" jdbcType="VARCHAR" property="userInfo.userBrief" />
+		<result column="user_passage_num" jdbcType="INTEGER" property="userInfo.userPassageNum" />
+		
+		<id column="passage_id" jdbcType="VARCHAR" property="passage.passageId" />
+		<result column="user_id" jdbcType="VARCHAR" property="passage.userId" />
+		<result column="passage_title" jdbcType="VARCHAR" property="passage.passageTitle" />
+		<result column="passage_picture" jdbcType="VARCHAR" property="passage.passagePicture" />
+		<result column="passage_time" jdbcType="TIMESTAMP" property="passage.passageTime" />
+		<result column="passage_like_count" jdbcType="INTEGER"
+			property="passage.passageLikeCount" />
+		<result column="passage_look_count" jdbcType="INTEGER"
+			property="passage.passageLookCount" />
+		<result column="passage_state" jdbcType="INTEGER" property="passage.passageState" />
+	</resultMap>
+	<resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+		type="com.nullnews.pojo.Passage">
+		<result column="passage_content" jdbcType="LONGVARCHAR"
+			property="passageContent" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		passage_id, user_id, passage_title, passage_picture,
+		passage_time,
+		passage_like_count,
+		passage_look_count, passage_state
+	</sql>
+	<sql id="Blob_Column_List">
+		passage_content
+	</sql>
+	<select id="selectByExampleWithBLOBs" parameterType="com.nullnews.pojo.PassageExample"
+		resultMap="ResultMapWithBLOBs">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from passage
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" parameterType="com.nullnews.pojo.PassageExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from passage
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from passage
+		where passage_id = #{passageId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		passage
+		where passage_id = #{passageId,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.nullnews.pojo.PassageExample">
+		delete from passage
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.nullnews.pojo.Passage">
+		insert into passage
+		(passage_id, user_id, passage_title,
+		passage_picture, passage_time,
+		passage_like_count,
+		passage_look_count, passage_state, passage_content
+		)
+		values (#{passageId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+		#{passageTitle,jdbcType=VARCHAR},
+		#{passagePicture,jdbcType=VARCHAR},
+		#{passageTime,jdbcType=TIMESTAMP},
+		#{passageLikeCount,jdbcType=INTEGER},
+		#{passageLookCount,jdbcType=INTEGER},
+		#{passageState,jdbcType=INTEGER},
+		#{passageContent,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.nullnews.pojo.Passage">
+		insert into passage
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="passageId != null">
+				passage_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="passageTitle != null">
+				passage_title,
+			</if>
+			<if test="passagePicture != null">
+				passage_picture,
+			</if>
+			<if test="passageTime != null">
+				passage_time,
+			</if>
+			<if test="passageLikeCount != null">
+				passage_like_count,
+			</if>
+			<if test="passageLookCount != null">
+				passage_look_count,
+			</if>
+			<if test="passageState != null">
+				passage_state,
+			</if>
+			<if test="passageContent != null">
+				passage_content,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="passageId != null">
+				#{passageId,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="passageTitle != null">
+				#{passageTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="passagePicture != null">
+				#{passagePicture,jdbcType=VARCHAR},
+			</if>
+			<if test="passageTime != null">
+				#{passageTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="passageLikeCount != null">
+				#{passageLikeCount,jdbcType=INTEGER},
+			</if>
+			<if test="passageLookCount != null">
+				#{passageLookCount,jdbcType=INTEGER},
+			</if>
+			<if test="passageState != null">
+				#{passageState,jdbcType=INTEGER},
+			</if>
+			<if test="passageContent != null">
+				#{passageContent,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.nullnews.pojo.PassageExample"
+		resultType="java.lang.Long">
+		select count(*) from passage
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update passage
+		<set>
+			<if test="record.passageId != null">
+				passage_id = #{record.passageId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userId != null">
+				user_id = #{record.userId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.passageTitle != null">
+				passage_title = #{record.passageTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="record.passagePicture != null">
+				passage_picture =
+				#{record.passagePicture,jdbcType=VARCHAR},
+			</if>
+			<if test="record.passageTime != null">
+				passage_time = #{record.passageTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.passageLikeCount != null">
+				passage_like_count =
+				#{record.passageLikeCount,jdbcType=INTEGER},
+			</if>
+			<if test="record.passageLookCount != null">
+				passage_look_count =
+				#{record.passageLookCount,jdbcType=INTEGER},
+			</if>
+			<if test="record.passageState != null">
+				passage_state = #{record.passageState,jdbcType=INTEGER},
+			</if>
+			<if test="record.passageContent != null">
+				passage_content =
+				#{record.passageContent,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update passage
+		set passage_id = #{record.passageId,jdbcType=VARCHAR},
+		user_id = #{record.userId,jdbcType=VARCHAR},
+		passage_title =
+		#{record.passageTitle,jdbcType=VARCHAR},
+		passage_picture =
+		#{record.passagePicture,jdbcType=VARCHAR},
+		passage_time =
+		#{record.passageTime,jdbcType=TIMESTAMP},
+		passage_like_count =
+		#{record.passageLikeCount,jdbcType=INTEGER},
+		passage_look_count =
+		#{record.passageLookCount,jdbcType=INTEGER},
+		passage_state =
+		#{record.passageState,jdbcType=INTEGER},
+		passage_content =
+		#{record.passageContent,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update passage
+		set passage_id = #{record.passageId,jdbcType=VARCHAR},
+		user_id = #{record.userId,jdbcType=VARCHAR},
+		passage_title =
+		#{record.passageTitle,jdbcType=VARCHAR},
+		passage_picture =
+		#{record.passagePicture,jdbcType=VARCHAR},
+		passage_time =
+		#{record.passageTime,jdbcType=TIMESTAMP},
+		passage_like_count =
+		#{record.passageLikeCount,jdbcType=INTEGER},
+		passage_look_count =
+		#{record.passageLookCount,jdbcType=INTEGER},
+		passage_state =
+		#{record.passageState,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.nullnews.pojo.Passage">
+		update passage
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="passageTitle != null">
+				passage_title = #{passageTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="passagePicture != null">
+				passage_picture = #{passagePicture,jdbcType=VARCHAR},
+			</if>
+			<if test="passageTime != null">
+				passage_time = #{passageTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="passageLikeCount != null">
+				passage_like_count =
+				#{passageLikeCount,jdbcType=INTEGER},
+			</if>
+			<if test="passageLookCount != null">
+				passage_look_count =
+				#{passageLookCount,jdbcType=INTEGER},
+			</if>
+			<if test="passageState != null">
+				passage_state = #{passageState,jdbcType=INTEGER},
+			</if>
+			<if test="passageContent != null">
+				passage_content = #{passageContent,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where passage_id = #{passageId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.nullnews.pojo.Passage">
+		update
+		passage
+		set user_id = #{userId,jdbcType=VARCHAR},
+		passage_title =
+		#{passageTitle,jdbcType=VARCHAR},
+		passage_picture =
+		#{passagePicture,jdbcType=VARCHAR},
+		passage_time =
+		#{passageTime,jdbcType=TIMESTAMP},
+		passage_like_count =
+		#{passageLikeCount,jdbcType=INTEGER},
+		passage_look_count =
+		#{passageLookCount,jdbcType=INTEGER},
+		passage_state =
+		#{passageState,jdbcType=INTEGER},
+		passage_content =
+		#{passageContent,jdbcType=LONGVARCHAR}
+		where passage_id =
+		#{passageId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.nullnews.pojo.Passage">
+		update passage
+		set
+		user_id = #{userId,jdbcType=VARCHAR},
+		passage_title =
+		#{passageTitle,jdbcType=VARCHAR},
+		passage_picture =
+		#{passagePicture,jdbcType=VARCHAR},
+		passage_time =
+		#{passageTime,jdbcType=TIMESTAMP},
+		passage_like_count =
+		#{passageLikeCount,jdbcType=INTEGER},
+		passage_look_count =
+		#{passageLookCount,jdbcType=INTEGER},
+		passage_state =
+		#{passageState,jdbcType=INTEGER}
+		where passage_id =
+		#{passageId,jdbcType=VARCHAR}
+	</update>
+
+	<select id="selectPassageByPublisTime" resultMap="BaseResultMap">
+		SELECT
+		p.passage_title,p.passage_id,p.passage_picture FROM passage
+		p,user_info u WHERE u.user_id=p.user_id
+		and user_type=1
+		ORDER BY
+		passage_time DESC
+	</select>
+	<select id="selectUserPassageByPublisTime" resultMap="BaseResultMap">
+		SELECT
+		p.passage_title,p.passage_id,p.passage_picture FROM passage
+		p,user_info u WHERE u.user_id=p.user_id
+		and user_type=1
+		ORDER BY
+		passage_time DESC
+	</select>
+	<select id="selectPassageByLookCount" resultMap="BaseResultMap">
+		SELECT
+		passage_picture,passage_title,passage_time,passage_id FROM
+		passage
+		WHERE UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(passage_time) &lt; 24 *60
+		*60
+		ORDER BY
+		passage_look_count DESC
+		LIMIT 4
+	</select>
+	<select id="selectPassageByLookCountAll" resultMap="BaseResultMap">
+		SELECT
+		passage_picture,passage_title,passage_id FROM passage
+		ORDER BY
+		passage_look_count DESC
+		LIMIT 4
+	</select>
+	<select id="selectPassageByLikeCount" resultMap="ResultMapWithBLOBs">
+		SELECT
+		passage_picture,passage_title,passage_id,passage_content FROM passage
+		WHERE UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(passage_time) &lt; 24 *60
+		*60
+		ORDER BY
+		passage_like_count DESC
+		LIMIT 4
+	</select>
+
+	<select id="selectPassageByLikeCountAll" resultMap="ResultMapWithBLOBs">
+		SELECT
+		passage_picture,passage_title,passage_id,passage_content FROM passage
+		ORDER BY
+		passage_like_count DESC
+		LIMIT 4
+	</select>
+
+	<select id="selectUserPassageByPublishTime" resultMap="ResultMapWithBLOBs">
+		SELECT
+		passage.passage_id,
+		passage.passage_title,
+		passage.passage_picture,
+		passage.passage_time
+		FROM
+		passage
+		WHERE
+		passage.user_id = #{userId}
+		ORDER
+		BY
+		passage.passage_time DESC
+	</select>
+	<select id="selectAllUserPassageByPublishTime1" resultMap="BaseResultMapUser">
+		SELECT
+		p.passage_id,
+		p.passage_title,
+		p.passage_picture,
+		p.passage_time
+		FROM
+		passage AS p
+		INNER JOIN user_info AS u ON p.user_id = u.user_id
+		where u.user_type = 0
+		ORDER BY
+		p.passage_time DESC
+	</select>
+	<select id="selectAllEditPassageByPublishTime" resultMap="BaseResultMapUser">
+		SELECT
+		p.passage_id,
+		p.passage_title,
+		p.passage_picture,
+		p.passage_time
+		FROM
+		passage AS p
+		INNER JOIN user_info AS u ON p.user_id = u.user_id
+		where u.user_type = 1
+		ORDER BY
+		p.passage_time DESC
+	</select>
+	
+
+</mapper>
